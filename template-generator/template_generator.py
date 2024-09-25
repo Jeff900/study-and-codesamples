@@ -1,3 +1,16 @@
+from os import listdir
+
+def get_templates() -> dict: 
+    """Read the templates in files in folder `templates`. Stores filenames as
+    key and file content as value.
+    """
+    templates = {}
+    for file in listdir('./templates'):
+        with open('./templates/' + file, 'r') as f:
+            templates[file] = f.read()
+    return templates
+
+
 def contains_numbers(string):
     for item in string:
         if item.isdecimal():
