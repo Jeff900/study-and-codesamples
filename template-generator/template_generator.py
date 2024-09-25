@@ -1,6 +1,11 @@
+"""template_generator generates textual templates based on template files and
+command line user input. It is an extension on a little school project and
+primarily intented as reference and portfolio.
+"""
+
 from os import listdir
 
-def get_templates() -> dict: 
+def get_templates() -> dict:
     """Read the templates in files in folder `templates`. Stores filenames as
     key and file content as value.
     """
@@ -11,7 +16,8 @@ def get_templates() -> dict:
     return templates
 
 
-def contains_numbers(string):
+def contains_numbers(string: str) -> bool:
+    """Checks if string contains decimal numbers."""
     for item in string:
         if item.isdecimal():
             return True
@@ -19,9 +25,8 @@ def contains_numbers(string):
 
 
 def is_name_valid(name: str) -> bool:
-    # First and last names: each minimum two characters and maximum ten
-    # characters;
-    # containing only alphabets, both starting with capital letters
+    """Verifies if string has valid length, if string does not start with upper
+    case and if characters are all alphabetical"""
     if not 2 <= len(name) <= 10:
         return False
     if not name[0].isupper():
@@ -32,7 +37,7 @@ def is_name_valid(name: str) -> bool:
 
 
 def is_title_valid(title: str) -> bool: 
-    # Job title: minimum 10 characters without numbers
+    """Verifies if string has valid length and if does not contain numbers"""
     if not len(title) >= 10:
         return False
     if contains_numbers(title):
@@ -41,8 +46,8 @@ def is_title_valid(title: str) -> bool:
 
 
 def is_salary_valid(salary: str) -> bool:
-    # Salary: valid floating point number between (and including) 20.000,00 and
-    # 80.000,00
+    """Verifies to format of salary and of the salary is withing particular
+    range"""
     salary = float(salary.replace('.', '').replace(',', '.'))
     if not type(salary) == float:
         return False
@@ -52,8 +57,7 @@ def is_salary_valid(salary: str) -> bool:
 
 
 def is_date_valid(date: str) -> bool:
-    # Date: only in YYYY-MM-DD format, no negative numbers, days between 1 - 31
-    # month between 1 - 12, year only 2021 and 2022.
+    """Verifies the date format (YYYY-MM-DD)"""
     year, month, day = date.split('-')
     month, day = int(month), int(day)
 
@@ -92,17 +96,13 @@ at this moment we have decided to proceed with another candidate.
     return template
 
 
-another_template = input('Another template? (Yes/No) ')
+another_template = 'Yes'
 
 while another_template == 'Yes':
     template_type = input('Job Offer or Rejection? ')
     first_name = input('First Name? ')
     last_name = input('Last Name? ')
     job_title = input('Job Title? ')
-
-    # print('is name valid:', is_name_valid(first_name))
-    # print('is name valid:', is_name_valid(last_name))
-    # print('is title valid:', is_title_valid(job_title))
 
     if is_name_valid(first_name) and is_name_valid(last_name)\
         and is_title_valid(job_title):
