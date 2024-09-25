@@ -9,11 +9,16 @@ def get_templates() -> dict:
     """Read the templates in files in folder `templates`. Stores filenames as
     key and file content as value.
     """
-    templates = {}
+    templates = []
     for file in listdir('./templates'):
-        with open('./templates/' + file, 'r') as f:
-            templates[file] = f.read()
+        templates.append(file)
     return templates
+
+def is_valid_template(template: str, templates: list) -> bool:
+    """Verifies if template exists"""
+    if not template in templates:
+        return False
+    return True
 
 
 def contains_numbers(string: str) -> bool:
@@ -36,7 +41,7 @@ def is_name_valid(name: str) -> bool:
     return True
 
 
-def is_title_valid(title: str) -> bool: 
+def is_title_valid(title: str) -> bool:
     """Verifies if string has valid length and if does not contain numbers"""
     if not len(title) >= 10:
         return False
@@ -97,9 +102,12 @@ at this moment we have decided to proceed with another candidate.
 
 
 another_template = 'Yes'
+templates = get_templates()
 
 while another_template == 'Yes':
     template_type = input('Job Offer or Rejection? ')
+    while not is_valid_template(template_type, templates):
+        template_type = input('Job Offer or Rejection? ')
     first_name = input('First Name? ')
     last_name = input('Last Name? ')
     job_title = input('Job Title? ')
