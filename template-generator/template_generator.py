@@ -4,6 +4,7 @@ primarily intented as reference and portfolio.
 """
 
 from os import listdir
+import re
 
 def get_templates() -> dict:
     """Read the templates in files in folder `templates`. Stores filenames as
@@ -63,15 +64,6 @@ def is_salary_valid(salary: str) -> bool:
 
 def is_date_valid(date: str) -> bool:
     """Verifies the date format (YYYY-MM-DD)"""
-    year, month, day = date.split('-')
-    month, day = int(month), int(day)
-
-    if not year in ('2021', '2022'):
-        return False
-    if not 1 <= month <= 12:
-        return False
-    if not 1 <= day <= 31:
-        return False
     return True
 
 
