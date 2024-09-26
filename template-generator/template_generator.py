@@ -54,7 +54,7 @@ def is_salary_valid(salary: str) -> bool:
     """Verifies to format of salary and of the salary is withing particular
     range"""
     salary = float(salary.replace('.', '').replace(',', '.'))
-    if not type(salary) == float:
+    if type(salary) != float:
         return False
     if not 20000.00 <= float(salary) <= 80000.00:
         return False
@@ -116,14 +116,14 @@ while another_template == 'Yes':
     if is_name_valid(first_name) and is_name_valid(last_name)\
         and is_title_valid(job_title):
 
-        if template_type == 'Job Offer':
+        if template_type == 'job_offer':
             annual_salary = input('Annual Salary? ')
             start_date = input('Starting Date? (YYYY-MM-DD) ')
             if is_salary_valid(annual_salary) and is_date_valid(start_date):
                 print(job_offer_template())
             else:
                 print('Input error')
-        elif template_type == 'Rejection':
+        elif template_type == 'rejection':
             give_feedback = input('Want to add feedback? ')
             if give_feedback == 'Yes':
                 feedback = input('Feedback? ')
