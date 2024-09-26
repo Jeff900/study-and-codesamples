@@ -130,8 +130,7 @@ while another_template == 'Yes':
             else:
                 feedback = ''
 
-            print(job_rejection_template(
-                first_name, last_name, job_title, feedback))
+            print(job_rejection_template())
     else:
         print('Input error')
 
