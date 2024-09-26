@@ -14,7 +14,7 @@ def get_templates() -> dict:
         templates.append(file)
     return templates
 
-def is_valid_template(template: str, templates: list) -> bool:
+def is_valid_template(template: str) -> bool:
     """Verifies if template exists"""
     if not template in templates:
         return False
@@ -75,29 +75,30 @@ def is_date_valid(date: str) -> bool:
     return True
 
 
-def job_offer_template(first_name, last_name, job_title, annual_salary, start_date):
-    template = f'''Here is the final letter to send:
-Dear {first_name} {last_name},
-After careful evaluation of your application for the position of {job_title},
-we are glad to offer you the job. Your salary will be {annual_salary} euro annually.
-Your start date will be on {start_date}. Please do not hesitate to contact us with any questions.
-Sincerely,
-HR Department of XYZ
-'''
+def job_offer_template():
+    with open('./templates/' + template_type, 'r') as f:
+        template = f.read()
+    template = template.format(
+        first_name=first_name,
+        last_name=last_name,
+        job_title=job_title,
+        annual_salary=annual_salary,
+        start_date=start_date
+    )
     return template
 
 
-def job_rejection_template(first_name, last_name, job_title, feedback):
-    template = f'''Here is the final letter to send:
-Dear {first_name} {last_name},
-After careful evaluation of your application for the position of {job_title},
-at this moment we have decided to proceed with another candidate.
-'''
-    print('Feedback:', feedback)
-    if not feedback == '':
-        template = template + f'Here we would like to provide you our feedback about the interview.\n{feedback}\n'
-    template = template + 'We wish you the best in finding your future desired career. Please do not hesitate to contact us with any questions.\n'
-    template = template + 'Sincerely,\nHR Department of XYZ'
+def job_rejection_template():
+    with open('./templates/' + template_type, 'r') as f:
+        template = f.read()
+    template = template.format(
+        first_name=first_name,
+        last_name=last_name,
+        job_title=job_title,
+        feedback=feedback
+    )
+    # if not feedback == '':
+    #     template = template + f'Here we would like to provide you our feedback about the interview.\n{feedback}\n'
     return template
 
 
@@ -106,7 +107,7 @@ templates = get_templates()
 
 while another_template == 'Yes':
     template_type = input('Job Offer or Rejection? ')
-    while not is_valid_template(template_type, templates):
+    while not is_valid_template(template_type):
         template_type = input('Job Offer or Rejection? ')
     first_name = input('First Name? ')
     last_name = input('Last Name? ')
@@ -119,8 +120,7 @@ while another_template == 'Yes':
             annual_salary = input('Annual Salary? ')
             start_date = input('Starting Date? (YYYY-MM-DD) ')
             if is_salary_valid(annual_salary) and is_date_valid(start_date):
-                print(job_offer_template(
-                    first_name, last_name, job_title, annual_salary, start_date))
+                print(job_offer_template())
             else:
                 print('Input error')
         elif template_type == 'Rejection':
